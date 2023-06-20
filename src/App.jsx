@@ -6,6 +6,24 @@ const App = () => {
    const [error, setError] = useState(null);
    const [isLoaded, setIsLoaded] = useState(false);
    const [countries, setCountries] = useState([]);
+  //  search query => set it to an empty string
+   const [query, setQuery] = useState("");
+
+  //  set search parameters
+  const [searchParam] = useState(["name"]);
+
+  const search = (countries) =>{
+    return countries.filter((country) => {
+      return searchParam.some((newCountry) => {
+        return (
+           country[newCountry]
+           .toString()
+           .toLowerCase()
+           .indexOf(query.toLowerCase()) > -1
+        );
+      });
+    });
+  }
 
   //  empty deps array[] means that this useEffect will run once
   useEffect(() => {
@@ -38,8 +56,22 @@ else if(!isLoaded){
 else {
   return (
     <div className='wrapper'>
-      <ul className='card-grid'>
-        {countries.map((country) => (
+      <div className='search-wrapper'>
+        <label htmlFor='search-form'>
+           <input
+           type='search'
+           name='search-form'
+           id='search-form'
+           className='search-input'
+           placeholder='Search for...'
+           value={query}
+           onChange={(e) => setQuery(e.target.value)}
+           />
+           <span className='sr-only'>Search for countries here</span>
+        </label>
+      </div>
+      <ul className='card-container'>
+        {search(countries).map((country) => (
           <li>
             <article className='card' key={country.id}>
               <div className='card-content'>
