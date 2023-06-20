@@ -1,4 +1,5 @@
 import React, {useState, useEffect} from 'react';
+import {AiOutlineSortDescending} from 'react-icons/ai';
 import '../styles/App.css'
 
 
@@ -7,23 +8,11 @@ const App = () => {
    const [isLoaded, setIsLoaded] = useState(false);
    const [countries, setCountries] = useState([]);
   //  search query => set it to an empty string
-   const [query, setQuery] = useState("");
+  const [query, setQuery] = useState(""); 
+  const [filterParam, setFilterParam] = useState(["All"]);
 
   //  set search parameters
   const [searchParam] = useState(["name"]);
-
-  const search = (countries) =>{
-    return countries.filter((country) => {
-      return searchParam.some((newCountry) => {
-        return (
-           country[newCountry]
-           .toString()
-           .toLowerCase()
-           .indexOf(query.toLowerCase()) > -1
-        );
-      });
-    });
-  }
 
   //  empty deps array[] means that this useEffect will run once
   useEffect(() => {
@@ -40,6 +29,58 @@ const App = () => {
     }
     );
   }, []);
+
+  const search = (countries) =>{
+    return countries.filter((country) => {
+      if(country.region == filterParam){
+        return searchParam.some((newCountry) => {
+          return (
+            country[newCountry]
+                   .toString()
+                   .toLowerCase()
+                   .indexOf(query.toLowerCase()) > -1
+          );
+        });
+      }
+      else if (filterParam == "All"){
+        return searchParam.some((newCountry) => {
+          return (
+            country[newCountry]
+                   .toString()
+                   .toLowerCase()
+                   .indexOf(query.toLowerCase()) > -1
+          );
+        });
+      }
+      else if (country.area == filterParam){
+        return searchParam.some((newCountry) => {
+          return (
+            country[newCountry]
+                   .toString()
+                   .toLowerCase()
+                   .indexOf(query.toLowerCase()) > -1
+          );
+        });
+      }
+      else if (filterParam == 65300){
+        return searchParam.some((newCountry) => {
+          return (
+            country[newCountry]
+                   .toString()
+                   .toLowerCase()
+                   .indexOf(query.toLowerCase()) > -1
+          );
+        });
+      }
+    });
+  }
+ 
+  // sort
+  const sortAscendingDescending = () => {
+    const sortedCountries = [...countries].sort().reverse();
+    setCountries(sortedCountries);
+  }; 
+
 //  render a list of countries
 if(error){
   return (
@@ -56,6 +97,7 @@ else if(!isLoaded){
 else {
   return (
     <div className='wrapper'>
+      {/* search bar */}
       <div className='search-wrapper'>
         <label htmlFor='search-form'>
            <input
@@ -70,6 +112,39 @@ else {
            <span className='sr-only'>Search for countries here</span>
         </label>
       </div>
+      
+      {/*filter by region => oceania*/}
+      <div className='select'> 
+      <select
+      className='custom-select'
+      aria-label='Filter countries by region'
+      onChange={(e) => setFilterParam(e.target.value)}
+      >
+        <option value="All">Filter By Region</option>
+        <option value="Africa">Africa</option>
+        <option value="Americas">Americas</option>
+        <option value="Asia">Asia</option>
+        <option value="Europe">Europe</option>
+        <option value="Oceania">Oceania</option>
+      </select>
+      <span className='focus'></span>
+
+       {/* filter by countries smaller than Lithuania by area size */}
+       <select 
+       className='custom-select'
+       aria-label='Filter countries by area size'
+       onChange={(e) => setFilterParam(e.target.value)}
+       >
+        <option value="All">Filter by area size</option>
+        <option value={65300}>Area size smaller than Lithuania</option>
+       </select>
+       {/* sort */}
+       <span className='sort-button'>
+        <button onClick={sortAscendingDescending} className='btn-desc'><span>SORT</span><AiOutlineSortDescending className='sort-icon'/></button>
+        </span>
+      </div>
+
+      {/* list of countries */}
       <ul className='card-container'>
         {search(countries).map((country) => (
           <li>
