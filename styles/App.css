@@ -1,0 +1,60 @@
+*,
+*:after,
+*:before {
+  margin: 0;
+  padding: 0;
+}
+:root {
+  --bg: hsl(0, 0%, 98%);
+  --bg-offset: hsl(0, 0%, 100%);
+  --text: hsl(200, 15%, 8%);
+  --gray: hsl(0, 0%, 52%);
+  --border: rgba(0, 0, 0, 0.1);
+}
+ul,
+ol {
+  list-style: none;
+}
+body {
+  background: var(--bg);
+  font-family: sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-size: 12px;
+}
+h2 {
+  height: 18px;
+  color: #5f5f5f;
+  font-weight: 100;
+  text-align: left;
+}
+.wrapper {
+  width: 96%;
+  max-width: 1140px;
+  margin: 0 auto;
+}
+.card-grid {
+  margin: 2em 0;
+  display: block;
+ 
+}
+
+.card {
+  background-color: var(--bg-offset);
+  padding: 12px;
+  box-shadow: 0px 2px 4px var(--border);
+  transition: all 0.3s cubic-bezier(0.075, 0.82, 0.165, 1);
+  margin-top: 20px;
+}
+.card-content {
+    padding: 20px 15px;
+}
+.card-content,
+h2 {
+  padding: 10px;
+  display: block;
+  -webkit-line-clamp: none;
+  -webkit-box-orient: none;
+  overflow: visible;
+}
+
