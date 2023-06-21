@@ -1,5 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {AiOutlineSortDescending} from 'react-icons/ai';
+import {GoTriangleDown} from 'react-icons/go';
 import '../styles/App.css'
 
 
@@ -52,17 +53,7 @@ const App = () => {
           );
         });
       }
-      else if (country.area == filterParam){
-        return searchParam.some((newCountry) => {
-          return (
-            country[newCountry]
-                   .toString()
-                   .toLowerCase()
-                   .indexOf(query.toLowerCase()) > -1
-          );
-        });
-      }
-      else if (filterParam == 65300){
+      else if (country.area < filterParam){
         return searchParam.some((newCountry) => {
           return (
             country[newCountry]
@@ -127,8 +118,8 @@ else {
         <option value="Europe">Europe</option>
         <option value="Oceania">Oceania</option>
       </select>
-      <span className='focus'></span>
-
+      <GoTriangleDown/>
+     
        {/* filter by countries smaller than Lithuania by area size */}
        <select 
        className='custom-select'
@@ -138,6 +129,7 @@ else {
         <option value="All">Filter by area size</option>
         <option value={65300}>Area size smaller than Lithuania</option>
        </select>
+       <GoTriangleDown/>
        {/* sort */}
        <span className='sort-button'>
         <button onClick={sortAscendingDescending} className='btn-desc'><span>SORT</span><AiOutlineSortDescending className='sort-icon'/></button>
