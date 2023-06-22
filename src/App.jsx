@@ -10,7 +10,7 @@ const App = () => {
   const [countries, setCountries] = useState([]);
   const [query, setQuery] = useState("");
   const [filterParam, setFilterParam] = useState(["All"]);
-  const [paginate, setPaginate] = useState(10);
+  const [paginate, setPaginate] = useState(4);
 
   //  set search parameters
   const [searchParam] = useState(["name"]);
@@ -73,7 +73,7 @@ const App = () => {
 
   // paginate
   const loadMore = (e) => {
-    setPaginate((prevValue) => prevValue + 10);
+    setPaginate((prevValue) => prevValue + 4);
   }
 
   //  render a list of countries
